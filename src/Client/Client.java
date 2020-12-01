@@ -1,45 +1,53 @@
 package Client;
 
-import java.io.IOException;
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.util.Scanner;
-
+import java.rmi.server.UnicastRemoteObject;
 import Serveur.ServeurIntf;
 
-public class Client {
-	
+public class Client extends UnicastRemoteObject {
+
+
+	private static final long serialVersionUID = 1L;
 	ServeurIntf Serveur;
-	Scanner sc;
+	CBClient callback;
+	
+	private String username;
 	
 	public Client() throws MalformedURLException, RemoteException, NotBoundException {
 		Serveur = (ServeurIntf)Naming.lookup("//localhost/RmiServer");
-		sc = new Scanner(System.in);
-		try {
-			new Listener(Serveur).start();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		callback = new CBClient() 
+		{
+			public void notifyMe(String msg, String user) {
+				if(user.equals(username)) System.out.println(user + " : " + msg);
+			}
+			
+		};
+		
 	}
 	
-	public static void main(String args[]) throws Exception {
-		
+	public String getUsername() {
+		return username;
+	}
+	
+	
+	
+	public void setUsername(String name) {
+		this.username = name;
+	}
 
-        Client chatClient=new Client();  
-        String user;
-        
-        System.out.println(chatClient.Serveur.messageBienvenue());
-        System.out.println("Entrez un nom d'utilisateur : ");
-        user = chatClient.sc.nextLine();
-        
-        while(true) {
-        	System.out.println(">");
-        	chatClient.Serveur.ecrireMessage(chatClient.sc.nextLine(),user);
-        }
-        
-        
-    }
+	public ServeurIntf getServeur() {
+		// TODO Auto-generated method stub
+		return Serveur;
+	}
+
+	public CBClient getCallback() {
+		return callback;
+	}
+	
+
+	
 }
