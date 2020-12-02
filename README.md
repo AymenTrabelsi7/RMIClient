@@ -33,7 +33,6 @@ MainServeur est le main du projet, c’est là que le registre RMI sera déclar�
   Idem ici il y a le même système qui permet de gérer la déconnexion spontanée des utilisateurs.
   
   c. userLeft() :
-  
   Est appelé par le client quand il veut quitter le chat volontairement ("/quit"). 
   
   Prend en paramètre le nom de l'utilisateur, et boucle dans les callbacks et la liste des username pour le supprimer.
