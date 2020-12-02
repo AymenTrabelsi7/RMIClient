@@ -1,17 +1,14 @@
 package Client;
 
-import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 import Serveur.ServeurIntf;
 
-public class Client extends UnicastRemoteObject {
+public class Client{
 
 
-	private static final long serialVersionUID = 1L;
 	ServeurIntf Serveur;
 	CBClient callback;
 	
@@ -19,14 +16,7 @@ public class Client extends UnicastRemoteObject {
 	
 	public Client() throws MalformedURLException, RemoteException, NotBoundException {
 		Serveur = (ServeurIntf)Naming.lookup("//localhost/RmiServer");
-		callback = new CBClient() 
-		{
-			public void notifyMe(String msg, String user) {
-				if(user.equals(username)) System.out.println(user + " : " + msg);
-			}
-			
-		};
-		
+		callback = new ClientCallback();
 	}
 	
 	public String getUsername() {
@@ -40,7 +30,6 @@ public class Client extends UnicastRemoteObject {
 	}
 
 	public ServeurIntf getServeur() {
-		// TODO Auto-generated method stub
 		return Serveur;
 	}
 
