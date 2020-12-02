@@ -41,3 +41,10 @@ MainServeur est le main du projet, c’est là que le registre RMI sera déclar�
   d. userNumber() :
   
   Retourne le nombre d'utilisateurs connectés.
+
+
+# Partie Client
+
+Le projet Client est constitué de 4 programmes : Client, MainClient, ClientCallback et CBClient et ServeurIntf (+ les programmes du Client qu’il doit avoir). 
+
+MainServeur est le main du projet, c’est là que le registre RMI sera déclaré. Serveur est la classe qui implémente ServeurIntf, et qui contient les fonctions qui gèrent le transfert des messages ainsi que la mise à jour des utilisateurs.
