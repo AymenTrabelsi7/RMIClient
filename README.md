@@ -53,7 +53,7 @@ MainClient est le programme principal : il instancie la classe client, demande u
 
 La classe Client contient 3 attributs uniquement (et leur getters/setters) : l'username, l'interface ServeurIntf qui permet d'éxécuter les méthodes du Serveur en RMI, et un objet de la classe ClientCallback, qui implémente l'interface CBClient et qui contient les différents callbacks.
 
-Méthodes de ClientCallback :
+### Méthodes de ClientCallback :
 
 
   #### notifyMe() :
