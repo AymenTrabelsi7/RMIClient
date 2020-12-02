@@ -16,7 +16,9 @@ Le projet Serveur est constitué de 3 programmes : Serveur, MainServeur et Serve
 
 MainServeur est le main du projet, c’est là que le registre RMI sera déclaré. Serveur est la classe qui implémente ServeurIntf, et qui contient les fonctions qui gèrent le transfert des messages ainsi que la mise à jour des utilisateurs.
 
-  a. newUser() :
+## Méthodes de Serveur :
+
+  ### newUser() :
   
   Permet d’ajouter un utilisateur dans le chat.
   
@@ -24,7 +26,7 @@ MainServeur est le main du projet, c’est là que le registre RMI sera déclar�
   
   La méthode boucle ensuite à travers les callbacks afin de publier le message qui signale aux utilisateurs qu’un nouveau client s’est connecté. Si jamais un utilisateur se déconnecte à ce moment, afin de ne pas déclencher un RemoteException, la méthode stocke les identifiants pour lesquels ça n’a pas marché, et les supprime à la fin de la boucle forEach.
   
-  b. ecrireMessage():
+  ### ecrireMessage():
   
   Permet de rediriger le message envoyé vers les autres clients.
   
@@ -32,18 +34,48 @@ MainServeur est le main du projet, c’est là que le registre RMI sera déclar�
   
   Idem ici il y a le même système qui permet de gérer la déconnexion spontanée des utilisateurs.
   
-  c. userLeft() :
+  ### userLeft() :
+  
   Est appelé par le client quand il veut quitter le chat volontairement ("/quit"). 
   
   Prend en paramètre le nom de l'utilisateur, et boucle dans les callbacks et la liste des username pour le supprimer.
   
-  d. userNumber() :
+  ### userNumber() :
   
   Retourne le nombre d'utilisateurs connectés.
 
 
 # Partie Client
 
-Le projet Client est constitué de 4 programmes : Client, MainClient, ClientCallback et CBClient et ServeurIntf (+ les programmes du Client qu’il doit avoir). 
+Le projet Client est constitué de 4 programmes : Client, MainClient, ClientCallback et CBClient + ServeurIntf qu'il doit connaître. 
 
-MainServeur est le main du projet, c’est là que le registre RMI sera déclaré. Serveur est la classe qui implémente ServeurIntf, et qui contient les fonctions qui gèrent le transfert des messages ainsi que la mise à jour des utilisateurs.
+MainClient est le programme principal : il instancie la classe client, demande un username à l'utilisateur et envoie le callback au serveur. Il envoie ensuite les messages entrés par l'utilisateur.
+
+La classe Client contient 3 attributs uniquement (et leur getters/setters) : l'username, l'interface ServeurIntf qui permet d'éxécuter les méthodes du Serveur en RMI, et un objet de la classe ClientCallback, qui implémente l'interface CBClient et qui contient les différents callbacks.
+
+Méthodes de ClientCallback :
+
+
+  ### notifyMe() :
+  
+  Permet d’ajouter un utilisateur dans le chat.
+  
+  Demande l’username et le callback à appeler en cas de nouveau message. Retourne false si l’username est déjà pris, true si tout se passe bien. 
+  
+  La méthode boucle ensuite à travers les callbacks afin de publier le message qui signale aux utilisateurs qu’un nouveau client s’est connecté. Si jamais un utilisateur se déconnecte à ce moment, afin de ne pas déclencher un RemoteException, la méthode stocke les identifiants pour lesquels ça n’a pas marché, et les supprime à la fin de la boucle forEach.
+  
+  ### messageNew() :
+  
+  Permet d’ajouter un utilisateur dans le chat.
+  
+  Demande l’username et le callback à appeler en cas de nouveau message. Retourne false si l’username est déjà pris, true si tout se passe bien. 
+  
+  La méthode boucle ensuite à travers les callbacks afin de publier le message qui signale aux utilisateurs qu’un nouveau client s’est connecté. Si jamais un utilisateur se déconnecte à ce moment, afin de ne pas déclencher un RemoteException, la méthode stocke les identifiants pour lesquels ça n’a pas marché, et les supprime à la fin de la boucle forEach.
+  
+  ### messageLeft() :
+  
+  Permet d’ajouter un utilisateur dans le chat.
+  
+  Demande l’username et le callback à appeler en cas de nouveau message. Retourne false si l’username est déjà pris, true si tout se passe bien. 
+  
+  La méthode boucle ensuite à travers les callbacks afin de publier le message qui signale aux utilisateurs qu’un nouveau client s’est connecté. Si jamais un utilisateur se déconnecte à ce moment, afin de ne pas déclencher un RemoteException, la méthode stocke les identifiants pour lesquels ça n’a pas marché, et les supprime à la fin de la boucle forEach.
